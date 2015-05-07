@@ -148,7 +148,7 @@
                     {
                         "in": "path",
                         "name": "id",
-                        "description": "ID of countri",
+                        "description": "ID of country",
                         "required": true,
                         "type": "integer"
                     }
@@ -170,6 +170,7 @@
             "post": {
                 "tags": [
                     "access:public",
+                    "landing_orders",
                     "orders"
                 ],
                 "summary": "Creates new order (used on landings)",
