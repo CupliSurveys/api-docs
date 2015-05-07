@@ -13,6 +13,7 @@
         }
     },
     "host": "api.cup.li",
+    "basePath": "/",
     "schemes": [
         "https"
     ],
@@ -25,60 +26,15 @@
         "application/json"
     ],
     "paths": {
-        "/countries": {
-            "get": {
-                "tags": [
-                    "geo",
-                    "countries"
-                ],
-                "summary": "Returns list of all countries",
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Country"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/countries/{id}": {
-            "get": {
-                "tags": [
-                    "geo",
-                    "countries"
-                ],
-                "summary": "Returns country information by given ID",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of countri",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Country"
-                        }
-                    },
-                    "404": {
-                        "description": "Country not found"
-                    }
-                }
-            }
-        },
         "/cities": {
             "get": {
                 "tags": [
-                    "geo",
-                    "cities"
+                    "access:public",
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "cities",
+                    "geo"
                 ],
                 "summary": "Returns filtered cities list",
                 "parameters": [
@@ -123,8 +79,12 @@
         "/cities/{id}": {
             "get": {
                 "tags": [
-                    "geo",
-                    "cities"
+                    "access:public",
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "cities",
+                    "geo"
                 ],
                 "summary": "Returns city information by given ID",
                 "parameters": [
@@ -149,47 +109,46 @@
                 }
             }
         },
-        "/regions": {
+        "/countries": {
             "get": {
                 "tags": [
-                    "geo",
-                    "regions"
+                    "access:public",
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "countries",
+                    "geo"
                 ],
-                "summary": "Returns filtered regions list",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country_id",
-                        "description": "ID of country for filtering",
-                        "required": false,
-                        "type": "integer"
-                    }
-                ],
+                "summary": "Returns list of all countries",
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/Region"
+                                "$ref": "#/definitions/Country"
                             }
                         }
                     }
                 }
             }
         },
-        "/regions/{id}": {
+        "/countries/{id}": {
             "get": {
                 "tags": [
-                    "geo",
-                    "regions"
+                    "access:public",
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "countries",
+                    "geo"
                 ],
-                "summary": "Returns region information by given ID",
+                "summary": "Returns country information by given ID",
                 "parameters": [
                     {
                         "in": "path",
                         "name": "id",
-                        "description": "ID of region",
+                        "description": "ID of countri",
                         "required": true,
                         "type": "integer"
                     }
@@ -198,11 +157,82 @@
                     "200": {
                         "description": "Successfull operation",
                         "schema": {
-                            "$ref": "#/definitions/Region"
+                            "$ref": "#/definitions/Country"
                         }
                     },
                     "404": {
-                        "description": "Region not found"
+                        "description": "Country not found"
+                    }
+                }
+            }
+        },
+        "/landing_orders": {
+            "post": {
+                "tags": [
+                    "access:public",
+                    "orders"
+                ],
+                "summary": "Creates new order (used on landings)",
+                "parameters": [
+                    {
+                        "name": "age_limit",
+                        "in": "formData",
+                        "description": "Age limit",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Text of comment",
+                        "type": "string"
+                    },
+                    {
+                        "name": "duration",
+                        "in": "formData",
+                        "description": "Survey duration",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "User email",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "User name",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "phone",
+                        "in": "formData",
+                        "description": "User phone number",
+                        "type": "string"
+                    },
+                    {
+                        "name": "region",
+                        "in": "formData",
+                        "description": "Desired regions",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "respondents_count",
+                        "in": "formData",
+                        "description": "Target number of respondents",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfull operation"
+                    },
+                    "422": {
+                        "description": "Validation errors"
                     }
                 }
             }
@@ -210,6 +240,8 @@
         "/offers": {
             "get": {
                 "tags": [
+                    "access:admin",
+                    "access:app",
                     "offers"
                 ],
                 "summary": "Returns paginated list of offers (25 items per page)",
@@ -223,7 +255,7 @@
                             }
                         }
                     },
-                    "403": {
+                    "401": {
                         "description": "You can't do that"
                     }
                 },
@@ -235,6 +267,8 @@
             },
             "post": {
                 "tags": [
+                    "access:admin",
+                    "access:app",
                     "offers"
                 ],
                 "summary": "Creates new offer",
@@ -243,9 +277,7 @@
                         "name": "campaign_id",
                         "in": "formData",
                         "description": "ID of campaign",
-                        "type": "integer",
-                        "format": "int32",
-                        "required": true
+                        "type": "integer"
                     },
                     {
                         "name": "provider_id",
@@ -275,11 +307,195 @@
                             "$ref": "#/definitions/Offer"
                         }
                     },
-                    "403": {
+                    "401": {
                         "description": "You can't do that"
                     },
                     "422": {
                         "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/offers/{id}": {
+            "get": {
+                "tags": [
+                    "access:admin",
+                    "access:app",
+                    "offers"
+                ],
+                "summary": "Returns offer information by given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of offer",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Offer"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Offer not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "access:admin",
+                    "access:app",
+                    "offers"
+                ],
+                "summary": "Updates offer",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of offer",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "campaign_id",
+                        "in": "formData",
+                        "description": "ID of campaign",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "provider_id",
+                        "in": "formData",
+                        "description": "ID of provider",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "remote_offer_id",
+                        "in": "formData",
+                        "description": "ID of offer on provider's side",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "settings",
+                        "in": "formData",
+                        "description": "Hash with custom options",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Offer"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Offer not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "access:admin",
+                    "access:app",
+                    "offers"
+                ],
+                "summary": "Deletes offer by given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of offer",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfull operation"
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Offer not found"
+                    }
+                }
+            }
+        },
+        "/regions": {
+            "get": {
+                "tags": [
+                    "access:public",
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "geo",
+                    "regions"
+                ],
+                "summary": "Returns filtered regions list",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "country_id",
+                        "description": "ID of country for filtering",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Region"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/regions/{id}": {
+            "get": {
+                "tags": [
+                    "access:public",
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "geo",
+                    "regions"
+                ],
+                "summary": "Returns region information by given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of region",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Region"
+                        }
+                    },
+                    "404": {
+                        "description": "Region not found"
                     }
                 }
             }
