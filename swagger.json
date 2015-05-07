@@ -149,7 +149,7 @@
                     {
                         "in": "path",
                         "name": "id",
-                        "description": "ID of countri",
+                        "description": "ID of country",
                         "required": true,
                         "type": "integer"
                     }
