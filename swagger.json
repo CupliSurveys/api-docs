@@ -148,7 +148,7 @@
                     {
                         "in": "path",
                         "name": "id",
-                        "description": "ID of country",
+                        "description": "ID of countri",
                         "required": true,
                         "type": "integer"
                     }
@@ -233,7 +233,10 @@
                         "description": "Successfull operation"
                     },
                     "422": {
-                        "description": "Validation errors"
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
                     }
                 }
             }
@@ -312,7 +315,10 @@
                         "description": "You can't do that"
                     },
                     "422": {
-                        "description": "Validation errors"
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
                     }
                 }
             }
@@ -403,6 +409,12 @@
                     },
                     "404": {
                         "description": "Offer not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
                     }
                 }
             },
@@ -431,6 +443,99 @@
                     },
                     "404": {
                         "description": "Offer not found"
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "post": {
+                "tags": [
+                    "access:user",
+                    "orders"
+                ],
+                "summary": "Creates new order for current user (used on dashboard)",
+                "parameters": [
+                    {
+                        "name": "about",
+                        "in": "formData",
+                        "description": "\"About your research\" text",
+                        "type": "string"
+                    },
+                    {
+                        "name": "duration",
+                        "in": "formData",
+                        "description": "Survey duration (ex. \"10-20 minutes\")",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "target",
+                        "in": "formData",
+                        "description": "Desired numbers of completes",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfull operation"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/providers": {
+            "get": {
+                "tags": [
+                    "access:admin",
+                    "access:app",
+                    "providers"
+                ],
+                "summary": "Returns providers list",
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Provider"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/providers/{id}": {
+            "get": {
+                "tags": [
+                    "access:admin",
+                    "access:app",
+                    "providers"
+                ],
+                "summary": "Returns providers list",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of provider",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Provider"
+                        }
+                    },
+                    "404": {
+                        "description": "Provider not found"
                     }
                 }
             }
@@ -546,6 +651,14 @@
                 }
             }
         },
+        "ErrorsHash": {
+            "properties": {
+                "errors": {
+                    "type": "string",
+                    "format": "json"
+                }
+            }
+        },
         "Offer": {
             "properties": {
                 "id": {
@@ -578,6 +691,35 @@
                 }
             }
         },
+        "Provider": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "utm_hash": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "object",
+                    "format": "json"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
         "Region": {
             "properties": {
                 "id": {
@@ -592,6 +734,42 @@
                     "type": "string"
                 },
                 "name_ru": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "company_name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "about": {
+                    "type": "string"
+                },
+                "campaigns_count": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "is_confirmed": {
+                    "type": "boolean"
+                },
+                "is_privileged": {
+                    "type": "boolean"
+                },
+                "locale": {
                     "type": "string"
                 }
             }
