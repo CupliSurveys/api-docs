@@ -5,7 +5,8 @@
         "title": "Cupli Surveys API",
         "termsOfService": "https://cup.li/terms",
         "contact": {
-            "name": "api@cup.li"
+            "name": "Cupli Surveys' API Team",
+            "email": "api@cup.li"
         },
         "license": {
             "name": "Private Commercial",
@@ -231,6 +232,9 @@
                 "responses": {
                     "204": {
                         "description": "Successfull operation"
+                    },
+                    "401": {
+                        "description": "You can't do that"
                     },
                     "422": {
                         "description": "Validation errors",
@@ -480,6 +484,9 @@
                     "204": {
                         "description": "Successfull operation"
                     },
+                    "401": {
+                        "description": "You can't do that"
+                    },
                     "422": {
                         "description": "Validation errors",
                         "schema": {
@@ -506,6 +513,9 @@
                                 "$ref": "#/definitions/Provider"
                             }
                         }
+                    },
+                    "401": {
+                        "description": "You can't do that"
                     }
                 }
             }
@@ -533,6 +543,9 @@
                         "schema": {
                             "$ref": "#/definitions/Provider"
                         }
+                    },
+                    "401": {
+                        "description": "You can't do that"
                     },
                     "404": {
                         "description": "Provider not found"
@@ -619,7 +632,7 @@
             "properties": {
                 "id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "name_en": {
                     "type": "string"
@@ -633,15 +646,15 @@
             "properties": {
                 "id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "region_id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "country_id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "name_en": {
                     "type": "string"
@@ -663,19 +676,19 @@
             "properties": {
                 "id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "campaign_id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "provider_id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "remote_offer_id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "settings": {
                     "type": "object",
@@ -695,7 +708,7 @@
             "properties": {
                 "id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "name": {
                     "type": "string"
@@ -724,11 +737,11 @@
             "properties": {
                 "id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "country_id": {
                     "type": "integer",
-                    "format": "int64"
+                    "format": "int32"
                 },
                 "name_en": {
                     "type": "string"
