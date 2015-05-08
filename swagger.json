@@ -253,6 +253,16 @@
                     "offers"
                 ],
                 "summary": "Returns paginated list of offers (25 items per page)",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Page number",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
