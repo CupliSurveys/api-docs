@@ -315,7 +315,7 @@
                         "name": "settings",
                         "in": "formData",
                         "description": "Hash with custom options",
-                        "type": "integer"
+                        "type": "string"
                     }
                 ],
                 "responses": {
