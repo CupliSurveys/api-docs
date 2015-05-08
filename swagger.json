@@ -337,6 +337,37 @@
                 }
             }
         },
+        "/offers/count": {
+            "get": {
+                "tags": [
+                    "access:admin",
+                    "access:app",
+                    "offers"
+                ],
+                "summary": "Returns offers count",
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "result": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
         "/offers/{id}": {
             "get": {
                 "tags": [
