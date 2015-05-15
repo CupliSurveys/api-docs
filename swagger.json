@@ -691,6 +691,13 @@
                         "description": "ID of country for filtering",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Search query",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -702,6 +709,9 @@
                                 "$ref": "#/definitions/Region"
                             }
                         }
+                    },
+                    "413": {
+                        "description": "Requested dataset is too large"
                     }
                 }
             }
