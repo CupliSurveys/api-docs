@@ -27,6 +27,509 @@
         "application/json"
     ],
     "paths": {
+        "/campaigns": {
+            "get": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "campaigns"
+                ],
+                "summary": "Returns filtered campaigns list",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "user_id",
+                        "description": "ID of user for filtration",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "state",
+                        "description": "State for filtration",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Search query for filtration",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Campaign"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "campaigns"
+                ],
+                "summary": "Creates new campaign for authorized user",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Campaign name",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "link_builder",
+                        "in": "formData",
+                        "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
+                        "type": "string"
+                    },
+                    {
+                        "name": "survey_url",
+                        "in": "formData",
+                        "description": "Link to survey (with `http://` and all of this stuff)",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "settings",
+                        "in": "formData",
+                        "description": "Hash with custom options",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}": {
+            "get": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "campaigns"
+                ],
+                "summary": "Returns campaign's JSON representation",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "City not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "campaigns"
+                ],
+                "summary": "Updates a campaign",
+                "description": "User can only update campaigns in `new` state.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of campaign",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Campaign name",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "link_builder",
+                        "in": "formData",
+                        "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
+                        "type": "string"
+                    },
+                    {
+                        "name": "survey_url",
+                        "in": "formData",
+                        "description": "Link to survey (with `http://` and all of this stuff)",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "settings",
+                        "in": "formData",
+                        "description": "Hash with custom options",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "access:admin",
+                    "access:user",
+                    "campaigns"
+                ],
+                "summary": "Destroys campaign by given ID",
+                "description": "User can only destroy campaigns in `new` state.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfull operation"
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}/activate": {
+            "post": {
+                "tags": [
+                    "access:admin",
+                    "access:user",
+                    "campaigns"
+                ],
+                "summary": "Activates campaign for rotation",
+                "description": "User can only activate campaigns in `paused` state.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}/assign": {
+            "put": {
+                "tags": [
+                    "access:admin",
+                    "campaigns"
+                ],
+                "summary": "Assigns campaign to desired user",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "user_id",
+                        "description": "ID of user",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}/finish": {
+            "post": {
+                "tags": [
+                    "access:admin",
+                    "access:user",
+                    "campaigns"
+                ],
+                "summary": "Finishes campaign",
+                "description": "Finished campaign can't be activated again!",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}/pause": {
+            "post": {
+                "tags": [
+                    "access:admin",
+                    "access:user",
+                    "campaigns"
+                ],
+                "summary": "Pauses campaign",
+                "description": "User can only pause `active` campaign",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}/reject": {
+            "post": {
+                "tags": [
+                    "access:admin",
+                    "campaigns"
+                ],
+                "summary": "Rejects campaign",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}/state_changes": {
+            "get": {
+                "tags": [
+                    "access:admin",
+                    "access:user",
+                    "campaigns"
+                ],
+                "summary": "Returns state changes history for campaign",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/StateChange"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    }
+                }
+            }
+        },
+        "/campaigns/{id}/submit": {
+            "post": {
+                "tags": [
+                    "access:admin",
+                    "access:user",
+                    "campaigns"
+                ],
+                "summary": "Sends campaign to moderation",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
         "/cities": {
             "get": {
                 "tags": [
@@ -758,6 +1261,50 @@
         }
     },
     "definitions": {
+        "Campaign": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "link_builder": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "survey_url": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "object",
+                    "format": "json"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "available_transitions": {
+                    "type": "object",
+                    "format": "array"
+                },
+                "statistics": {
+                    "type": "object",
+                    "format": "json"
+                }
+            }
+        },
         "Country": {
             "properties": {
                 "id": {
@@ -911,6 +1458,21 @@
                 },
                 "name_ru": {
                     "type": "string"
+                }
+            }
+        },
+        "StateChange": {
+            "properties": {
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
                 }
             }
         },
