@@ -819,6 +819,13 @@
                         "in": "formData",
                         "description": "Hash with custom options",
                         "type": "string"
+                    },
+                    {
+                        "name": "motivated",
+                        "in": "formData",
+                        "description": "Traffic type: motivated/unmotivated",
+                        "type": "boolean",
+                        "required": false
                     }
                 ],
                 "responses": {
@@ -943,6 +950,13 @@
                         "in": "formData",
                         "description": "Hash with custom options",
                         "type": "string"
+                    },
+                    {
+                        "name": "motivated",
+                        "in": "formData",
+                        "description": "Traffic type: motivated/unmotivated",
+                        "type": "boolean",
+                        "required": false
                     }
                 ],
                 "responses": {
@@ -1370,6 +1384,9 @@
                 "settings": {
                     "type": "object",
                     "format": "json"
+                },
+                "motivated": {
+                    "type": "boolean"
                 },
                 "created_at": {
                     "type": "string",
