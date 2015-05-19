@@ -815,6 +815,13 @@
                         "required": true
                     },
                     {
+                        "name": "cost_model",
+                        "in": "formData",
+                        "description": "Payment model: cpp/cpm/cpc/cpa",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
                         "name": "settings",
                         "in": "formData",
                         "description": "Hash with custom options",
@@ -943,6 +950,13 @@
                         "in": "formData",
                         "description": "ID of offer on provider's side",
                         "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "cost_model",
+                        "in": "formData",
+                        "description": "Payment model: cpp/cpm/cpc/cpa",
+                        "type": "string",
                         "required": true
                     },
                     {
@@ -1380,6 +1394,9 @@
                 "remote_offer_id": {
                     "type": "integer",
                     "format": "int32"
+                },
+                "cost_model": {
+                    "type": "string"
                 },
                 "settings": {
                     "type": "object",
