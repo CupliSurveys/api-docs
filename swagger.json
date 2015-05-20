@@ -96,6 +96,13 @@
                         "type": "string"
                     },
                     {
+                        "name": "priority",
+                        "in": "formData",
+                        "description": "Campaign priority (from 1 to 5)",
+                        "type": "integer",
+                        "default": 3
+                    },
+                    {
                         "name": "survey_url",
                         "in": "formData",
                         "description": "Link to survey (with `http://` and all of this stuff)",
@@ -187,6 +194,13 @@
                         "in": "formData",
                         "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
                         "type": "string"
+                    },
+                    {
+                        "name": "priority",
+                        "in": "formData",
+                        "description": "Campaign priority (from 1 to 5)",
+                        "type": "integer",
+                        "default": 3
                     },
                     {
                         "name": "survey_url",
@@ -1304,6 +1318,10 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "priority": {
+                    "type": "integer",
+                    "format": "int32"
                 },
                 "survey_url": {
                     "type": "string"
