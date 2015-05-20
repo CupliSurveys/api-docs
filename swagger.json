@@ -90,6 +90,14 @@
                         "required": true
                     },
                     {
+                        "name": "complete_price",
+                        "in": "formData",
+                        "description": "Price per complete",
+                        "type": "number",
+                        "format": "float",
+                        "default": 0
+                    },
+                    {
                         "name": "link_builder",
                         "in": "formData",
                         "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
@@ -188,6 +196,14 @@
                         "description": "Campaign name",
                         "type": "string",
                         "required": true
+                    },
+                    {
+                        "name": "complete_price",
+                        "in": "formData",
+                        "description": "Price per complete",
+                        "type": "number",
+                        "format": "float",
+                        "default": 0
                     },
                     {
                         "name": "link_builder",
@@ -1312,6 +1328,10 @@
                 "user_id": {
                     "type": "integer",
                     "format": "int32"
+                },
+                "complete_price": {
+                    "type": "number",
+                    "format": "float"
                 },
                 "link_builder": {
                     "type": "string"
