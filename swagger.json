@@ -94,7 +94,7 @@
                         "in": "formData",
                         "description": "Price per complete",
                         "type": "number",
-                        "format": "float",
+                        "format": "double",
                         "default": 0
                     },
                     {
@@ -104,6 +104,16 @@
                         "type": "string",
                         "format": "date-time",
                         "required": true
+                    },
+                    {
+                        "name": "exclusive_offer_ids",
+                        "in": "formData",
+                        "description": "Array with IDs of exclusive offers for this campaign",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
                     },
                     {
                         "name": "link_builder",
@@ -220,6 +230,16 @@
                         "type": "string",
                         "format": "date-time",
                         "required": true
+                    },
+                    {
+                        "name": "exclusive_offer_ids",
+                        "in": "formData",
+                        "description": "Array with IDs of exclusive offers for this campaign",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
                     },
                     {
                         "name": "link_builder",
@@ -1363,11 +1383,18 @@
                 },
                 "complete_price": {
                     "type": "number",
-                    "format": "float"
+                    "format": "double"
                 },
                 "deadline_at": {
                     "type": "string",
                     "format": "date-time"
+                },
+                "exclusive_offer_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
                 },
                 "link_builder": {
                     "type": "string"
