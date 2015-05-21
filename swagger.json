@@ -100,7 +100,7 @@
                     {
                         "name": "deadline_at",
                         "in": "formData",
-                        "description": "When campaign should be finished",
+                        "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
                         "type": "string",
                         "format": "date-time"
                     },
@@ -215,7 +215,7 @@
                     {
                         "name": "deadline_at",
                         "in": "formData",
-                        "description": "When campaign should be finished",
+                        "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
                         "type": "string",
                         "format": "date-time"
                     },
