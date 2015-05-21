@@ -98,6 +98,13 @@
                         "default": 0
                     },
                     {
+                        "name": "deadline_at",
+                        "in": "formData",
+                        "description": "When campaign should be finished",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
                         "name": "link_builder",
                         "in": "formData",
                         "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
@@ -204,6 +211,13 @@
                         "type": "number",
                         "format": "float",
                         "default": 0
+                    },
+                    {
+                        "name": "deadline_at",
+                        "in": "formData",
+                        "description": "When campaign should be finished",
+                        "type": "string",
+                        "format": "date-time"
                     },
                     {
                         "name": "link_builder",
