@@ -863,6 +863,14 @@
                         "description": "Traffic type: motivated/unmotivated",
                         "type": "boolean",
                         "required": false
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "Offer price",
+                        "type": "number",
+                        "format": "double",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1001,6 +1009,14 @@
                         "description": "Traffic type: motivated/unmotivated",
                         "type": "boolean",
                         "required": false
+                    },
+                    {
+                        "name": "price",
+                        "in": "formData",
+                        "description": "Offer price",
+                        "type": "number",
+                        "format": "double",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1442,6 +1458,10 @@
                 },
                 "motivated": {
                     "type": "boolean"
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double"
                 },
                 "created_at": {
                     "type": "string",
