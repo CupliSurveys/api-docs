@@ -102,7 +102,8 @@
                         "in": "formData",
                         "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "required": true
                     },
                     {
                         "name": "link_builder",
@@ -217,7 +218,8 @@
                         "in": "formData",
                         "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "required": true
                     },
                     {
                         "name": "link_builder",
