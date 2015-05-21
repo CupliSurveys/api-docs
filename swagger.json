@@ -1363,6 +1363,10 @@
                     "type": "number",
                     "format": "float"
                 },
+                "deadline_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
                 "link_builder": {
                     "type": "string"
                 },
