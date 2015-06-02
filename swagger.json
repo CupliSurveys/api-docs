@@ -483,6 +483,44 @@
                 }
             }
         },
+        "/campaigns/{id}/preview": {
+            "post": {
+                "tags": [
+                    "access:admin",
+                    "campaigns"
+                ],
+                "summary": "Activates campaign for preview",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Campaign"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
         "/campaigns/{id}/reject": {
             "post": {
                 "tags": [
@@ -565,44 +603,6 @@
                     "campaigns"
                 ],
                 "summary": "Sends campaign to moderation",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/test": {
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "campaigns"
-                ],
-                "summary": "Activates campaign for testing",
                 "parameters": [
                     {
                         "in": "path",
