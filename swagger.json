@@ -1324,7 +1324,7 @@
                 }
             }
         },
-        "/substitutions": {
+        "/campaigns/{id}/substitutions": {
             "get": {
                 "tags": [
                     "access:user",
@@ -1333,6 +1333,15 @@
                     "substitutions"
                 ],
                 "summary": "Returns substitutions list",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
@@ -1355,11 +1364,11 @@
                 "summary": "Creates substitution",
                 "parameters": [
                     {
-                        "name": "campaign_id",
-                        "in": "formData",
-                        "type": "integer",
-                        "description": "ID of user",
-                        "required": true
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
                     },
                     {
                         "name": "question_id",
