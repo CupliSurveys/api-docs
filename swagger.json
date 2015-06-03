@@ -1296,10 +1296,77 @@
                         "default": "numeric"
                     },
                     {
-                        "name": "text",
+                        "name": "description",
                         "in": "formData",
                         "description": "Question's text",
                         "type": "string"
+                    },
+                    {
+                        "name": "settings",
+                        "in": "formData",
+                        "description": "Hash with custom settings",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation"
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
+        "/substitutions": {
+            "get": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "substitutions"
+                ],
+                "summary": "Returns substitutions list",
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Substitution"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "substitutions"
+                ],
+                "summary": "Creates substitution",
+                "parameters": [
+                    {
+                        "name": "campaign_id",
+                        "in": "formData",
+                        "type": "integer",
+                        "description": "ID of user",
+                        "required": true
+                    },
+                    {
+                        "name": "question_id",
+                        "in": "formData",
+                        "description": "ID of question",
+                        "required": true,
+                        "type": "integer"
                     },
                     {
                         "name": "settings",
@@ -1603,8 +1670,36 @@
                 "title": {
                     "type": "string"
                 },
-                "text": {
+                "description": {
                     "type": "string"
+                },
+                "settings": {
+                    "type": "object",
+                    "format": "json"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Substitution": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "campaign_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "question_id": {
+                    "type": "integer",
+                    "format": "int32"
                 },
                 "settings": {
                     "type": "object",
