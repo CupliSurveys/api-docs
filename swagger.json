@@ -1683,8 +1683,7 @@
                     "type": "string"
                 },
                 "settings": {
-                    "type": "object",
-                    "format": "json"
+                    "$ref": "#/definitions/QuestionSettings"
                 },
                 "created_at": {
                     "type": "string",
@@ -1693,6 +1692,33 @@
                 "updated_at": {
                     "type": "string",
                     "format": "date-time"
+                }
+            }
+        },
+        "QuestionSettings": {
+            "type": "object",
+            "format": "json",
+            "properties": {
+                "values": {
+                    "$ref": "#/definitions/QuestionSettingsValues"
+                },
+                "template": {
+                    "type": "string",
+                    "description": "template to render question on prescreen"
+                }
+            }
+        },
+        "QuestionSettingsValues": {
+            "format": "json",
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "description": "key like `city` or `age`"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "human name to display lable on prescreen"
                 }
             }
         },
@@ -1711,8 +1737,7 @@
                     "format": "int32"
                 },
                 "settings": {
-                    "type": "object",
-                    "format": "json"
+                    "$ref": "#/definitions/SubstitutionSettings"
                 },
                 "created_at": {
                     "type": "string",
@@ -1721,6 +1746,39 @@
                 "updated_at": {
                     "type": "string",
                     "format": "date-time"
+                }
+            }
+        },
+        "SubstitutionSettings": {
+            "format": "json",
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "description": "key to substitute `sex` for `age` from question"
+                },
+                "rules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SubstitutionRules"
+                    }
+                }
+            }
+        },
+        "SubstitutionRules": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "type": "string"
+                    },
+                    "description": "array of values to be substituted `['m']` of `['1', '2', '3']` for example"
+                },
+                "substitute_to": {
+                    "type": "string",
+                    "description": "string to substitute values"
                 }
             }
         },
