@@ -27,6 +27,74 @@
         "application/json"
     ],
     "paths": {
+        "/answers": {
+            "get": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "access:app",
+                    "answers"
+                ],
+                "summary": "Returns filtered answers list",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Search query for filtration",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Answer"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "access:user",
+                    "access:admin",
+                    "answers",
+                    "campaign_question"
+                ],
+                "summary": "Creates new answer for campaign question",
+                "parameters": [
+                    {
+                        "name": "text",
+                        "in": "formData",
+                        "description": "Answer text",
+                        "type": "string"
+                    },
+                    {
+                        "name": "settings",
+                        "in": "formData",
+                        "description": "Hash with custom options",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Answer"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    }
+                }
+            }
+        },
         "/campaigns": {
             "get": {
                 "tags": [
@@ -634,6 +702,103 @@
                 }
             }
         },
+        "/campaigns/{campaign_id}/questions": {
+            "get": {
+                "tags": [
+                    "campaigns",
+                    "questions",
+                    "campaign:question"
+                ],
+                "summary": "Returns list of campaign questions",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "campaign_id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CampaignQuestion"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/campaign_questions": {
+            "post": {
+                "tags": [
+                    "campaigns",
+                    "questions",
+                    "campaign:question"
+                ],
+                "summary": "Creates new campaign question",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "campaign_id",
+                        "description": "ID of campaign",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "question_id",
+                        "in": "formData",
+                        "description": "ID of question",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "settings",
+                        "in": "formData",
+                        "description": "Hash with custom options",
+                        "type": "string"
+                    },
+                    {
+                        "name": "answers",
+                        "in": "formData",
+                        "description": "Array with answer options",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull operation",
+                        "schema": {
+                            "$ref": "#/definitions/Offer"
+                        }
+                    },
+                    "401": {
+                        "description": "You can't do that"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorsHash"
+                        }
+                    }
+                }
+            }
+        },
         "/cities": {
             "get": {
                 "tags": [
@@ -868,6 +1033,20 @@
                         "required": false,
                         "type": "integer",
                         "default": 1
+                    },
+                    {
+                        "in": "query",
+                        "name": "campaign_id",
+                        "description": "Filters by campaign ID",
+                        "type": "integer",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Filters by id, remote_offer_id, campaign_id, provider name",
+                        "type": "string",
+                        "required": false
                     }
                 ],
                 "responses": {
@@ -1485,6 +1664,21 @@
         }
     },
     "definitions": {
+        "Answer": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": "object",
+                    "format": "json"
+                }
+            }
+        },
         "Campaign": {
             "properties": {
                 "id": {
@@ -1545,6 +1739,34 @@
                 "statistics": {
                     "type": "object",
                     "format": "json"
+                }
+            }
+        },
+        "CampaignQuestion": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "campaign_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "settings": {
+                    "type": "object",
+                    "format": "json"
+                },
+                "substitution": {
+                    "$ref": "#/definitions/Substitution"
+                },
+                "question": {
+                    "$ref": "#/definitions/Question"
+                },
+                "answers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Answer"
+                    }
                 }
             }
         },
