@@ -893,6 +893,15 @@
                     "geo"
                 ],
                 "summary": "Returns list of all countries",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Search query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
@@ -1375,6 +1384,15 @@
                     "providers"
                 ],
                 "summary": "Returns providers list",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Search query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
@@ -1433,6 +1451,15 @@
                     "questions"
                 ],
                 "summary": "Returns questions list",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "description": "Search query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
