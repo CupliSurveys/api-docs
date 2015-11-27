@@ -1,2104 +1,2030 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "Cupli Surveys API",
-        "termsOfService": "https://cup.li/terms",
-        "contact": {
-            "name": "Cupli Surveys' API Team",
-            "email": "api@cup.li"
-        },
-        "license": {
-            "name": "Private Commercial",
-            "url": "http://www.binpress.com/license/view/l/ba91551136499dedb8b0a4356ca7efd4"
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Cupli Surveys API",
+    "termsOfService": "https://cup.li/terms",
+    "contact": {
+      "name": "Cupli Surveys' API Team",
+      "email": "api@cup.li"
     },
-    "host": "api.cup.li",
-    "basePath": "/",
-    "schemes": [
-        "https"
-    ],
-    "consumes": [
-        "application/json",
-        "application/vnd.cupli.api+json",
-        "application/vnd.cupli.api.v1+json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "paths": {
-        "/answers": {
-            "get": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "answers"
-                ],
-                "summary": "Returns filtered answers list",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Search query for filtration",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Answer"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "answers",
-                    "campaign_question"
-                ],
-                "summary": "Creates new answer for campaign question",
-                "parameters": [
-                    {
-                        "name": "text",
-                        "in": "formData",
-                        "description": "Answer text",
-                        "type": "string"
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom options",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Answer"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    }
-                }
-            }
-        },
-        "/campaigns": {
-            "get": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "campaigns"
-                ],
-                "summary": "Returns filtered campaigns list",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "user_id",
-                        "description": "ID of user for filtration",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "in": "query",
-                        "name": "state",
-                        "description": "State for filtration",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Search query for filtration",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Campaign"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "campaigns"
-                ],
-                "summary": "Creates new campaign for authorized user",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "formData",
-                        "description": "Campaign name",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "complete_price",
-                        "in": "formData",
-                        "description": "Price per complete",
-                        "type": "number",
-                        "format": "double",
-                        "default": 0
-                    },
-                    {
-                        "name": "deadline_at",
-                        "in": "formData",
-                        "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
-                        "type": "string",
-                        "format": "date-time",
-                        "required": true
-                    },
-                    {
-                        "name": "exclusive_offer_ids",
-                        "in": "formData",
-                        "description": "Array with IDs of exclusive offers for this campaign",
-                        "type": "array",
-                        "items": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    },
-                    {
-                        "name": "link_builder",
-                        "in": "formData",
-                        "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
-                        "type": "string"
-                    },
-                    {
-                        "name": "priority",
-                        "in": "formData",
-                        "description": "Campaign priority (from 1 to 5)",
-                        "type": "integer",
-                        "default": 3
-                    },
-                    {
-                        "name": "survey_url",
-                        "in": "formData",
-                        "description": "Link to survey (with `http://` and all of this stuff)",
-                        "type": "integer"
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom options",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}": {
-            "get": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "campaigns"
-                ],
-                "summary": "Returns campaign's JSON representation",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "City not found"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "campaigns"
-                ],
-                "summary": "Updates a campaign",
-                "description": "User can only update campaigns in `new` state.",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of campaign",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "name",
-                        "in": "formData",
-                        "description": "Campaign name",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "complete_price",
-                        "in": "formData",
-                        "description": "Price per complete",
-                        "type": "number",
-                        "format": "float",
-                        "default": 0
-                    },
-                    {
-                        "name": "deadline_at",
-                        "in": "formData",
-                        "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
-                        "type": "string",
-                        "format": "date-time",
-                        "required": true
-                    },
-                    {
-                        "name": "exclusive_offer_ids",
-                        "in": "formData",
-                        "description": "Array with IDs of exclusive offers for this campaign",
-                        "type": "array",
-                        "items": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    },
-                    {
-                        "name": "link_builder",
-                        "in": "formData",
-                        "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
-                        "type": "string"
-                    },
-                    {
-                        "name": "priority",
-                        "in": "formData",
-                        "description": "Campaign priority (from 1 to 5)",
-                        "type": "integer",
-                        "default": 3
-                    },
-                    {
-                        "name": "survey_url",
-                        "in": "formData",
-                        "description": "Link to survey (with `http://` and all of this stuff)",
-                        "type": "integer"
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom options",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "access:admin",
-                    "access:user",
-                    "campaigns"
-                ],
-                "summary": "Destroys campaign by given ID",
-                "description": "User can only destroy campaigns in `new` state.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfull operation"
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/activate": {
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "access:user",
-                    "campaigns"
-                ],
-                "summary": "Activates campaign for rotation",
-                "description": "User can only activate campaigns in `paused` state.",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/assign": {
-            "put": {
-                "tags": [
-                    "access:admin",
-                    "campaigns"
-                ],
-                "summary": "Assigns campaign to desired user",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "user_id",
-                        "description": "ID of user",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/finish": {
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "access:user",
-                    "campaigns"
-                ],
-                "summary": "Finishes campaign",
-                "description": "Finished campaign can't be activated again!",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/pause": {
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "access:user",
-                    "campaigns"
-                ],
-                "summary": "Pauses campaign",
-                "description": "User can only pause `active` campaign",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/preview": {
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "campaigns"
-                ],
-                "summary": "Activates campaign for preview",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/reject": {
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "campaigns"
-                ],
-                "summary": "Rejects campaign",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/state_changes": {
-            "get": {
-                "tags": [
-                    "access:admin",
-                    "access:user",
-                    "campaigns"
-                ],
-                "summary": "Returns state changes history for campaign",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/StateChange"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/submit": {
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "access:user",
-                    "campaigns"
-                ],
-                "summary": "Sends campaign to moderation",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Campaign"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{campaign_id}/questions": {
-            "get": {
-                "tags": [
-                    "campaigns",
-                    "questions",
-                    "campaign:question"
-                ],
-                "summary": "Returns list of campaign questions",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "campaign_id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/CampaignQuestion"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            }
-        },
-        "/campaign_questions": {
-            "post": {
-                "tags": [
-                    "campaigns",
-                    "questions",
-                    "campaign:question"
-                ],
-                "summary": "Creates new campaign question",
-                "parameters": [
-                    {
-                        "in": "formData",
-                        "name": "campaign_id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "question_id",
-                        "in": "formData",
-                        "description": "ID of question",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom options",
-                        "type": "string"
-                    },
-                    {
-                        "name": "answers",
-                        "in": "formData",
-                        "description": "Array with answer options",
-                        "required": false,
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Offer"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/cities": {
-            "get": {
-                "tags": [
-                    "access:public",
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "cities",
-                    "geo"
-                ],
-                "summary": "Returns filtered cities list",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country_id",
-                        "description": "ID of country for filtering",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "in": "query",
-                        "name": "region_id",
-                        "description": "ID of region for filtering",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Search query",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/City"
-                            }
-                        }
-                    },
-                    "413": {
-                        "description": "Requested dataset is too large"
-                    }
-                }
-            }
-        },
-        "/cities/{id}": {
-            "get": {
-                "tags": [
-                    "access:public",
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "cities",
-                    "geo"
-                ],
-                "summary": "Returns city information by given ID",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of city",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/City"
-                        }
-                    },
-                    "404": {
-                        "description": "City not found"
-                    }
-                }
-            }
-        },
-        "/countries": {
-            "get": {
-                "tags": [
-                    "access:public",
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "countries",
-                    "geo"
-                ],
-                "summary": "Returns list of all countries",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Search query",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Country"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/countries/{id}": {
-            "get": {
-                "tags": [
-                    "access:public",
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "countries",
-                    "geo"
-                ],
-                "summary": "Returns country information by given ID",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of country",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Country"
-                        }
-                    },
-                    "404": {
-                        "description": "Country not found"
-                    }
-                }
-            }
-        },
-        "/landing_orders": {
-            "post": {
-                "tags": [
-                    "access:public",
-                    "landing_orders",
-                    "orders"
-                ],
-                "summary": "Creates new order (used on landings)",
-                "parameters": [
-                    {
-                        "name": "age_limit",
-                        "in": "formData",
-                        "description": "Age limit",
-                        "type": "integer"
-                    },
-                    {
-                        "name": "comment",
-                        "in": "formData",
-                        "description": "Text of comment",
-                        "type": "string"
-                    },
-                    {
-                        "name": "duration",
-                        "in": "formData",
-                        "description": "Survey duration",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "User email",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "name",
-                        "in": "formData",
-                        "description": "User name",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "phone",
-                        "in": "formData",
-                        "description": "User phone number",
-                        "type": "string"
-                    },
-                    {
-                        "name": "region",
-                        "in": "formData",
-                        "description": "Desired regions",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "respondents_count",
-                        "in": "formData",
-                        "description": "Target number of respondents",
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfull operation"
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/offers": {
-            "get": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "offers"
-                ],
-                "summary": "Returns paginated list of offers (25 items per page)",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "description": "Page number",
-                        "required": false,
-                        "type": "integer",
-                        "default": 1
-                    },
-                    {
-                        "in": "query",
-                        "name": "campaign_id",
-                        "description": "Filters by campaign ID",
-                        "type": "integer",
-                        "required": false
-                    },
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Filters by id, remote_offer_id, campaign_id, provider name",
-                        "type": "string",
-                        "required": false
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Offer"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "offers"
-                ],
-                "summary": "Creates new offer",
-                "parameters": [
-                    {
-                        "name": "campaign_id",
-                        "in": "formData",
-                        "description": "ID of campaign",
-                        "type": "integer"
-                    },
-                    {
-                        "name": "provider_id",
-                        "in": "formData",
-                        "description": "ID of provider",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "remote_offer_id",
-                        "in": "formData",
-                        "description": "ID of offer on provider's side",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "cost_model",
-                        "in": "formData",
-                        "description": "Payment model: cpp/cpm/cpc/cpa",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom options",
-                        "type": "string"
-                    },
-                    {
-                        "name": "motivated",
-                        "in": "formData",
-                        "description": "Traffic type: motivated/unmotivated",
-                        "type": "boolean",
-                        "required": false
-                    },
-                    {
-                        "name": "price",
-                        "in": "formData",
-                        "description": "Offer price",
-                        "type": "number",
-                        "format": "double",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Offer"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/offers/count": {
-            "get": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "offers"
-                ],
-                "summary": "Returns offers count",
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "result": {
-                                    "type": "integer"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key": []
-                    }
-                ]
-            }
-        },
-        "/offers/{id}": {
-            "get": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "offers"
-                ],
-                "summary": "Returns offer information by given ID",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of offer",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Offer"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Offer not found"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "offers"
-                ],
-                "summary": "Updates offer",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of offer",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "campaign_id",
-                        "in": "formData",
-                        "description": "ID of campaign",
-                        "type": "integer"
-                    },
-                    {
-                        "name": "provider_id",
-                        "in": "formData",
-                        "description": "ID of provider",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "remote_offer_id",
-                        "in": "formData",
-                        "description": "ID of offer on provider's side",
-                        "type": "integer",
-                        "required": true
-                    },
-                    {
-                        "name": "cost_model",
-                        "in": "formData",
-                        "description": "Payment model: cpp/cpm/cpc/cpa",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom options",
-                        "type": "string"
-                    },
-                    {
-                        "name": "motivated",
-                        "in": "formData",
-                        "description": "Traffic type: motivated/unmotivated",
-                        "type": "boolean",
-                        "required": false
-                    },
-                    {
-                        "name": "price",
-                        "in": "formData",
-                        "description": "Offer price",
-                        "type": "number",
-                        "format": "double",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Offer"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Offer not found"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "offers"
-                ],
-                "summary": "Deletes offer by given ID",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of offer",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfull operation"
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Offer not found"
-                    }
-                }
-            }
-        },
-        "/orders": {
-            "post": {
-                "tags": [
-                    "access:user",
-                    "orders"
-                ],
-                "summary": "Creates new order for current user (used on dashboard)",
-                "parameters": [
-                    {
-                        "name": "about",
-                        "in": "formData",
-                        "description": "\"About your research\" text",
-                        "type": "string"
-                    },
-                    {
-                        "name": "duration",
-                        "in": "formData",
-                        "description": "Survey duration (ex. \"10-20 minutes\")",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "target",
-                        "in": "formData",
-                        "description": "Desired numbers of completes",
-                        "type": "integer",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfull operation"
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/providers": {
-            "get": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "providers"
-                ],
-                "summary": "Returns providers list",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Search query",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Provider"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    }
-                }
-            }
-        },
-        "/providers/{id}": {
-            "get": {
-                "tags": [
-                    "access:admin",
-                    "access:app",
-                    "providers"
-                ],
-                "summary": "Returns providers list",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of provider",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Provider"
-                        }
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "404": {
-                        "description": "Provider not found"
-                    }
-                }
-            }
-        },
-        "/questions": {
-            "get": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "questions"
-                ],
-                "summary": "Returns questions list",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Search query",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Question"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "questions"
-                ],
-                "summary": "Creates new question",
-                "parameters": [
-                    {
-                        "name": "title",
-                        "in": "formData",
-                        "description": "Question title",
-                        "type": "string"
-                    },
-                    {
-                        "name": "key",
-                        "in": "formData",
-                        "description": "Key like `age` or `gender`",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "kind",
-                        "in": "formData",
-                        "description": "Assertion kind. Can be `numeric`, `string` or `custom`",
-                        "type": "string",
-                        "default": "numeric"
-                    },
-                    {
-                        "name": "description",
-                        "in": "formData",
-                        "description": "Question's text",
-                        "type": "string"
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom settings",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation"
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/campaigns/{id}/substitutions": {
-            "get": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "substitutions"
-                ],
-                "summary": "Returns substitutions list",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Substitution"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "substitutions"
-                ],
-                "summary": "Creates substitution",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of campaign",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "question_id",
-                        "in": "formData",
-                        "description": "ID of question",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "settings",
-                        "in": "formData",
-                        "description": "Hash with custom settings",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation"
-                    },
-                    "401": {
-                        "description": "You can't do that"
-                    },
-                    "422": {
-                        "description": "Validation errors",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorsHash"
-                        }
-                    }
-                }
-            }
-        },
-        "/regions": {
-            "get": {
-                "tags": [
-                    "access:public",
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "geo",
-                    "regions"
-                ],
-                "summary": "Returns filtered regions list",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country_id",
-                        "description": "ID of country for filtering",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "in": "query",
-                        "name": "query",
-                        "description": "Search query",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Region"
-                            }
-                        }
-                    },
-                    "413": {
-                        "description": "Requested dataset is too large"
-                    }
-                }
-            }
-        },
-        "/regions/{id}": {
-            "get": {
-                "tags": [
-                    "access:public",
-                    "access:user",
-                    "access:admin",
-                    "access:app",
-                    "geo",
-                    "regions"
-                ],
-                "summary": "Returns region information by given ID",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "description": "ID of region",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfull operation",
-                        "schema": {
-                            "$ref": "#/definitions/Region"
-                        }
-                    },
-                    "404": {
-                        "description": "Region not found"
-                    }
-                }
-            }
-        }
-    },
-    "securityDefinitions": {
-        "api_key": {
-            "type": "apiKey",
-            "name": "token",
-            "in": "header"
-        }
-    },
-    "definitions": {
-        "Answer": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "settings": {
-                    "type": "object",
-                    "format": "json"
-                }
-            }
-        },
-        "Campaign": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "user_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "complete_price": {
-                    "type": "number",
-                    "format": "double"
-                },
-                "deadline_at": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "exclusive_offer_ids": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer",
-                        "format": "int32"
-                    }
-                },
-                "link_builder": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "priority": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "survey_url": {
-                    "type": "string"
-                },
-                "state": {
-                    "type": "string"
-                },
-                "settings": {
-                    "type": "object",
-                    "format": "json"
-                },
-                "created_at": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "updated_at": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "available_transitions": {
-                    "type": "object",
-                    "format": "array"
-                },
-                "statistics": {
-                    "type": "object",
-                    "format": "json"
-                }
-            }
-        },
-        "CampaignQuestion": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "campaign_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "settings": {
-                    "type": "object",
-                    "format": "json"
-                },
-                "substitution": {
-                    "$ref": "#/definitions/Substitution"
-                },
-                "question": {
-                    "$ref": "#/definitions/Question"
-                },
-                "answers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Answer"
-                    }
-                }
-            }
-        },
-        "Country": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "name_en": {
-                    "type": "string"
-                },
-                "name_ru": {
-                    "type": "string"
-                }
-            }
-        },
-        "City": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "region_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "country_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "name_en": {
-                    "type": "string"
-                },
-                "name_ru": {
-                    "type": "string"
-                }
-            }
-        },
-        "ErrorsHash": {
-            "properties": {
-                "errors": {
-                    "type": "string",
-                    "format": "json"
-                }
-            }
-        },
-        "Offer": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "campaign_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "provider_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "remote_offer_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "cost_model": {
-                    "type": "string"
-                },
-                "settings": {
-                    "type": "object",
-                    "format": "json"
-                },
-                "motivated": {
-                    "type": "boolean"
-                },
-                "price": {
-                    "type": "number",
-                    "format": "double"
-                },
-                "created_at": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "updated_at": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
-        },
-        "Provider": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "utm_hash": {
-                    "type": "string"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "settings": {
-                    "type": "object",
-                    "format": "json"
-                },
-                "created_at": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "updated_at": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
-        },
-        "Question": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "key": {
-                    "type": "string"
-                },
-                "kind": {
-                    "type": "string",
-                    "default": "numeric"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "settings": {
-                    "$ref": "#/definitions/QuestionSettings"
-                },
-                "created_at": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "updated_at": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
-        },
-        "QuestionSettings": {
-            "type": "object",
-            "format": "json",
-            "properties": {
-                "values": {
-                    "$ref": "#/definitions/QuestionSettingsValues"
-                },
-                "template": {
-                    "type": "string",
-                    "description": "template to render question on prescreen"
-                }
-            }
-        },
-        "QuestionSettingsValues": {
-            "format": "json",
-            "type": "object",
-            "properties": {
-                "key": {
-                    "type": "string",
-                    "description": "key like `city` or `age`"
-                },
-                "value": {
-                    "type": "string",
-                    "description": "human name to display lable on prescreen"
-                }
-            }
-        },
-        "Substitution": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "campaign_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "question_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "settings": {
-                    "$ref": "#/definitions/SubstitutionSettings"
-                },
-                "created_at": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "updated_at": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
-        },
-        "SubstitutionSettings": {
-            "format": "json",
-            "type": "object",
-            "properties": {
-                "key": {
-                    "type": "string",
-                    "description": "key to substitute `sex` for `age` from question"
-                },
-                "rules": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/SubstitutionRules"
-                    }
-                }
-            }
-        },
-        "SubstitutionRules": {
-            "type": "object",
-            "properties": {
-                "values": {
-                    "type": "array",
-                    "items": {
-                        "type": "array",
-                        "type": "string"
-                    },
-                    "description": "array of values to be substituted `['m']` of `['1', '2', '3']` for example"
-                },
-                "substitute_to": {
-                    "type": "string",
-                    "description": "string to substitute values"
-                }
-            }
-        },
-        "Region": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "country_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "name_en": {
-                    "type": "string"
-                },
-                "name_ru": {
-                    "type": "string"
-                }
-            }
-        },
-        "StateChange": {
-            "properties": {
-                "user_id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "state": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
-        },
-        "User": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "full_name": {
-                    "type": "string"
-                },
-                "company_name": {
-                    "type": "string"
-                },
-                "phone_number": {
-                    "type": "string"
-                },
-                "about": {
-                    "type": "string"
-                },
-                "campaigns_count": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "is_confirmed": {
-                    "type": "boolean"
-                },
-                "is_privileged": {
-                    "type": "boolean"
-                },
-                "locale": {
-                    "type": "string"
-                }
-            }
-        }
+    "license": {
+      "name": "Private Commercial",
+      "url": "http://www.binpress.com/license/view/l/ba91551136499dedb8b0a4356ca7efd4"
     }
+  },
+  "host": "api.cup.li",
+  "basePath": "/",
+  "schemes": ["https"],
+  "consumes": ["application/json", "application/vnd.cupli.api+json", "application/vnd.cupli.api.v1+json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/answers": {
+      "get": {
+        "tags": ["access:user", "access:admin", "answers"],
+        "summary": "Returns filtered answers list",
+        "parameters": [{
+          "in": "query",
+          "name": "query",
+          "description": "Search query for filtration",
+          "required": false,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Answer"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        }
+      },
+      "post": {
+        "tags": ["access:user", "access:admin", "answers", "campaign_question"],
+        "summary": "Creates new answer for campaign question",
+        "parameters": [{
+          "name": "text",
+          "in": "formData",
+          "description": "Answer text",
+          "type": "string"
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom options",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Answer"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        }
+      }
+    },
+    "/rewards": {
+      "get": {
+        "tags": ["access:admin", "rewards"],
+        "summary": "Returns filtered rewards list",
+        "parameters": [{
+          "in": "query",
+          "name": "query",
+          "description": "Search query for filtration",
+          "required": false,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reward"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        }
+      },
+      "post": {
+        "tags": ["access:admin", "rewards"],
+        "summary": "Creates new reward",
+        "parameters": [{
+          "name": "handler",
+          "in": "formData",
+          "description": "Reward handler",
+          "type": "string"
+        }, {
+          "name": "name",
+          "in": "formData",
+          "description": "Title",
+          "type": "string"
+        }, {
+          "name": "description",
+          "in": "formData",
+          "description": "Description of the reward",
+          "type": "string"
+        }, {
+          "name": "cost",
+          "in": "formData",
+          "description": "Cost for reward provider",
+          "type": "float"
+        }, {
+          "name": "value",
+          "in": "formData",
+          "description": "Value cost for respondent",
+          "type": "float"
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom options",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Reward"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        }
+      }
+    },
+    "/rewards/count": {
+      "get": {
+        "tags": ["access:admin", "rewards"],
+        "summary": "Returns rewards count",
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        },
+        "security": [{
+          "api_key": []
+        }]
+      }
+    },
+    "/campaigns": {
+      "get": {
+        "tags": ["access:user", "access:admin", "campaigns"],
+        "summary": "Returns filtered campaigns list",
+        "parameters": [{
+          "in": "query",
+          "name": "user_id",
+          "description": "ID of user for filtration",
+          "required": false,
+          "type": "integer"
+        }, {
+          "in": "query",
+          "name": "state",
+          "description": "State for filtration",
+          "required": false,
+          "type": "string"
+        }, {
+          "in": "query",
+          "name": "query",
+          "description": "Search query for filtration",
+          "required": false,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Campaign"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        }
+      },
+      "post": {
+        "tags": ["access:user", "access:admin", "campaigns"],
+        "summary": "Creates new campaign for authorized user",
+        "parameters": [{
+          "name": "name",
+          "in": "formData",
+          "description": "Campaign name",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "complete_price",
+          "in": "formData",
+          "description": "Price per complete",
+          "type": "number",
+          "format": "double",
+          "default": 0
+        }, {
+          "name": "deadline_at",
+          "in": "formData",
+          "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
+          "type": "string",
+          "format": "date-time",
+          "required": true
+        }, {
+          "name": "exclusive_offer_ids",
+          "in": "formData",
+          "description": "Array with IDs of exclusive offers for this campaign",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }, {
+          "name": "link_builder",
+          "in": "formData",
+          "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
+          "type": "string"
+        }, {
+          "name": "priority",
+          "in": "formData",
+          "description": "Campaign priority (from 1 to 5)",
+          "type": "integer",
+          "default": 3
+        }, {
+          "name": "survey_url",
+          "in": "formData",
+          "description": "Link to survey (with `http://` and all of this stuff)",
+          "type": "integer"
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom options",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/count": {
+      "get": {
+        "tags": ["access:admin", "campaigns"],
+        "summary": "Returns campaigns count",
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        },
+        "security": [{
+          "api_key": []
+        }]
+      }
+    },
+    "/campaigns/{id}": {
+      "get": {
+        "tags": ["access:user", "access:admin", "campaigns"],
+        "summary": "Returns campaign's JSON representation",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "City not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["access:user", "access:admin", "campaigns"],
+        "summary": "Updates a campaign",
+        "description": "User can only update campaigns in `new` state.",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "ID of campaign",
+          "type": "integer",
+          "required": true
+        }, {
+          "name": "name",
+          "in": "formData",
+          "description": "Campaign name",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "complete_price",
+          "in": "formData",
+          "description": "Price per complete",
+          "type": "number",
+          "format": "float",
+          "default": 0
+        }, {
+          "name": "deadline_at",
+          "in": "formData",
+          "description": "When campaign should be finished (ex. `2015-05-28 19:00:17 +0300`)",
+          "type": "string",
+          "format": "date-time",
+          "required": true
+        }, {
+          "name": "exclusive_offer_ids",
+          "in": "formData",
+          "description": "Array with IDs of exclusive offers for this campaign",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }, {
+          "name": "link_builder",
+          "in": "formData",
+          "description": "Link builder (leave empty or set `default` if you don't know what it is exaclty for)",
+          "type": "string"
+        }, {
+          "name": "priority",
+          "in": "formData",
+          "description": "Campaign priority (from 1 to 5)",
+          "type": "integer",
+          "default": 3
+        }, {
+          "name": "survey_url",
+          "in": "formData",
+          "description": "Link to survey (with `http://` and all of this stuff)",
+          "type": "integer"
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom options",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["access:admin", "access:user", "campaigns"],
+        "summary": "Destroys campaign by given ID",
+        "description": "User can only destroy campaigns in `new` state.",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "204": {
+            "description": "Successfull operation"
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/rewards": {
+      "get": {
+        "tags": ["access:admin", "campaigns", "rewards"],
+        "summary": "Returns rewards list for campaign",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reward"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/assign_rewards": {
+      "post": {
+        "tags": ["access:user", "campaigns", "rewards"],
+        "summary": "Adds rewards to campaign",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of the campaign",
+          "required": true,
+          "type": "integer"
+        }, {
+          "name": "reward_ids",
+          "in": "formData",
+          "description": "Reward ids array",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/activate": {
+      "post": {
+        "tags": ["access:admin", "access:user", "campaigns"],
+        "summary": "Activates campaign for rotation",
+        "description": "User can only activate campaigns in `paused` state.",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/assign": {
+      "put": {
+        "tags": ["access:admin", "campaigns"],
+        "summary": "Assigns campaign to desired user",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }, {
+          "in": "formData",
+          "name": "user_id",
+          "description": "ID of user",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/finish": {
+      "post": {
+        "tags": ["access:admin", "access:user", "campaigns"],
+        "summary": "Finishes campaign",
+        "description": "Finished campaign can't be activated again!",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/pause": {
+      "post": {
+        "tags": ["access:admin", "access:user", "campaigns"],
+        "summary": "Pauses campaign",
+        "description": "User can only pause `active` campaign",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/preview": {
+      "post": {
+        "tags": ["access:admin", "campaigns"],
+        "summary": "Activates campaign for preview",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/reject": {
+      "post": {
+        "tags": ["access:admin", "campaigns"],
+        "summary": "Rejects campaign",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/state_changes": {
+      "get": {
+        "tags": ["access:admin", "access:user", "campaigns"],
+        "summary": "Returns state changes history for campaign",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StateChange"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/submit": {
+      "post": {
+        "tags": ["access:admin", "access:user", "campaigns"],
+        "summary": "Sends campaign to moderation",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Campaign"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Campaign not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{id}/substitutions": {
+      "get": {
+        "tags": ["access:user", "access:admin", "substitutions"],
+        "summary": "Returns substitutions list",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Substitution"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["access:user", "access:admin", "substitutions"],
+        "summary": "Creates substitution",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }, {
+          "name": "question_id",
+          "in": "formData",
+          "description": "ID of question",
+          "required": true,
+          "type": "integer"
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom settings",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation"
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/campaigns/{campaign_id}/questions": {
+      "get": {
+        "tags": ["campaigns", "questions", "campaign:question"],
+        "summary": "Returns list of campaign questions",
+        "parameters": [{
+          "in": "path",
+          "name": "campaign_id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CampaignQuestion"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        },
+        "security": [{
+          "api_key": []
+        }]
+      }
+    },
+    "/campaign_questions": {
+      "post": {
+        "tags": ["campaigns", "questions", "campaign:question"],
+        "summary": "Creates new campaign question",
+        "parameters": [{
+          "in": "formData",
+          "name": "campaign_id",
+          "description": "ID of campaign",
+          "required": true,
+          "type": "integer"
+        }, {
+          "name": "question_id",
+          "in": "formData",
+          "description": "ID of question",
+          "type": "integer",
+          "required": true
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom options",
+          "type": "string"
+        }, {
+          "name": "answers",
+          "in": "formData",
+          "description": "Array with answer options",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/files/upload_params": {
+      "get": {
+        "tags": ["access:admin", "S3"],
+        "summary": "Returns parameters for direct upload file to AWS S3",
+        "parameters": [{
+          "in": "path",
+          "name": "filename",
+          "description": "File name",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/UploadFileParams"
+            }
+          }
+        }
+      }
+    },
+    "/landing_orders": {
+      "post": {
+        "tags": ["access:public", "landing_orders", "orders"],
+        "summary": "Creates new order (used on landings)",
+        "parameters": [{
+          "name": "age_limit",
+          "in": "formData",
+          "description": "Age limit",
+          "type": "integer"
+        }, {
+          "name": "comment",
+          "in": "formData",
+          "description": "Text of comment",
+          "type": "string"
+        }, {
+          "name": "duration",
+          "in": "formData",
+          "description": "Survey duration",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "email",
+          "in": "formData",
+          "description": "User email",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "name",
+          "in": "formData",
+          "description": "User name",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "phone",
+          "in": "formData",
+          "description": "User phone number",
+          "type": "string"
+        }, {
+          "name": "region",
+          "in": "formData",
+          "description": "Desired regions",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "respondents_count",
+          "in": "formData",
+          "description": "Target number of respondents",
+          "type": "integer"
+        }],
+        "responses": {
+          "204": {
+            "description": "Successfull operation"
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/offers": {
+      "get": {
+        "tags": ["access:admin", "offers"],
+        "summary": "Returns paginated list of offers (25 items per page)",
+        "parameters": [{
+          "in": "query",
+          "name": "page",
+          "description": "Page number",
+          "required": false,
+          "type": "integer",
+          "default": 1
+        }, {
+          "in": "query",
+          "name": "campaign_id",
+          "description": "Filters by campaign ID",
+          "type": "integer",
+          "required": false
+        }, {
+          "in": "query",
+          "name": "query",
+          "description": "Filters by id, remote_offer_id, campaign_id, provider name",
+          "type": "string",
+          "required": false
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Offer"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        },
+        "security": [{
+          "api_key": []
+        }]
+      },
+      "post": {
+        "tags": ["access:admin", "offers"],
+        "summary": "Creates new offer",
+        "parameters": [{
+          "name": "campaign_id",
+          "in": "formData",
+          "description": "ID of campaign",
+          "type": "integer"
+        }, {
+          "name": "provider_id",
+          "in": "formData",
+          "description": "ID of provider",
+          "type": "integer",
+          "required": true
+        }, {
+          "name": "remote_offer_id",
+          "in": "formData",
+          "description": "ID of offer on provider's side",
+          "type": "integer",
+          "required": true
+        }, {
+          "name": "cost_model",
+          "in": "formData",
+          "description": "Payment model: cpp/cpm/cpc/cpa",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom options",
+          "type": "string"
+        }, {
+          "name": "motivated",
+          "in": "formData",
+          "description": "Traffic type: motivated/unmotivated",
+          "type": "boolean",
+          "required": false
+        }, {
+          "name": "price",
+          "in": "formData",
+          "description": "Offer price",
+          "type": "number",
+          "format": "double",
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/offers/count": {
+      "get": {
+        "tags": ["access:admin", "offers"],
+        "summary": "Returns offers count",
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        },
+        "security": [{
+          "api_key": []
+        }]
+      }
+    },
+    "/offers/{id}": {
+      "get": {
+        "tags": ["access:admin", "offers"],
+        "summary": "Returns offer information by given ID",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of offer",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Offer not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["access:admin", "offers"],
+        "summary": "Updates offer",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of offer",
+          "required": true,
+          "type": "integer"
+        }, {
+          "name": "campaign_id",
+          "in": "formData",
+          "description": "ID of campaign",
+          "type": "integer"
+        }, {
+          "name": "provider_id",
+          "in": "formData",
+          "description": "ID of provider",
+          "type": "integer",
+          "required": true
+        }, {
+          "name": "remote_offer_id",
+          "in": "formData",
+          "description": "ID of offer on provider's side",
+          "type": "integer",
+          "required": true
+        }, {
+          "name": "cost_model",
+          "in": "formData",
+          "description": "Payment model: cpp/cpm/cpc/cpa",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom options",
+          "type": "string"
+        }, {
+          "name": "motivated",
+          "in": "formData",
+          "description": "Traffic type: motivated/unmotivated",
+          "type": "boolean",
+          "required": false
+        }, {
+          "name": "price",
+          "in": "formData",
+          "description": "Offer price",
+          "type": "number",
+          "format": "double",
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Offer not found"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["access:admin", "offers"],
+        "summary": "Deletes offer by given ID",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of offer",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "204": {
+            "description": "Successfull operation"
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Offer not found"
+          }
+        }
+      }
+    },
+    "/offers/{id}/rewards": {
+      "get": {
+        "tags": ["access:admin", "offers", "rewards"],
+        "summary": "Returns rewards list for offer",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of offer",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reward"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Offer not found"
+          }
+        }
+      }
+    },
+    "/offers/{id}/assign_rewards": {
+      "post": {
+        "tags": ["access:user", "offers", "rewards"],
+        "summary": "Adds rewards to offer",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of the offer",
+          "required": true,
+          "type": "integer"
+        }, {
+          "name": "reward_ids",
+          "in": "formData",
+          "description": "Reward ids array",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": ["access:user", "orders"],
+        "summary": "Creates new order for current user (used on dashboard)",
+        "parameters": [{
+          "name": "about",
+          "in": "formData",
+          "description": "\"About your research\" text",
+          "type": "string"
+        }, {
+          "name": "duration",
+          "in": "formData",
+          "description": "Survey duration (ex. \"10-20 minutes\")",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "target",
+          "in": "formData",
+          "description": "Desired numbers of completes",
+          "type": "integer",
+          "required": true
+        }],
+        "responses": {
+          "204": {
+            "description": "Successfull operation"
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/providers": {
+      "get": {
+        "tags": ["access:admin", "providers"],
+        "summary": "Returns providers list",
+        "parameters": [{
+          "in": "query",
+          "name": "query",
+          "description": "Search query",
+          "required": false,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Provider"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        }
+      }
+    },
+    "/providers/count": {
+      "get": {
+        "tags": ["access:admin", "providers"],
+        "summary": "Returns providers count",
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          }
+        },
+        "security": [{
+          "api_key": []
+        }]
+      }
+    },
+    "/providers/{id}": {
+      "get": {
+        "tags": ["access:admin", "providers"],
+        "summary": "Returns providers list",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of provider",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Provider not found"
+          }
+        }
+      }
+    },
+    "/questions": {
+      "get": {
+        "tags": ["access:user", "access:admin", "questions"],
+        "summary": "Returns questions list",
+        "parameters": [{
+          "in": "query",
+          "name": "query",
+          "description": "Search query",
+          "required": false,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Question"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["access:user", "access:admin", "questions"],
+        "summary": "Creates new question",
+        "parameters": [{
+          "name": "title",
+          "in": "formData",
+          "description": "Question title",
+          "type": "string"
+        }, {
+          "name": "key",
+          "in": "formData",
+          "description": "Key like `age` or `gender`",
+          "type": "string",
+          "required": true
+        }, {
+          "name": "kind",
+          "in": "formData",
+          "description": "Assertion kind. Can be `numeric`, `string` or `custom`",
+          "type": "string",
+          "default": "numeric"
+        }, {
+          "name": "description",
+          "in": "formData",
+          "description": "Question's text",
+          "type": "string"
+        }, {
+          "name": "settings",
+          "in": "formData",
+          "description": "Hash with custom settings",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation"
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    },
+    "/quota/{id}/rewards": {
+      "get": {
+        "tags": ["access:admin", "quota", "rewards"],
+        "summary": "Returns rewards list for quotum",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of quotum",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Reward"
+              }
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "404": {
+            "description": "Quotum not found"
+          }
+        }
+      }
+    },
+    "/quota/{id}/assign_rewards": {
+      "post": {
+        "tags": ["access:user", "quota", "rewards"],
+        "summary": "Adds rewards to quotum",
+        "parameters": [{
+          "in": "path",
+          "name": "id",
+          "description": "ID of the quotum",
+          "required": true,
+          "type": "integer"
+        }, {
+          "name": "reward_ids",
+          "in": "formData",
+          "description": "Reward ids array",
+          "required": false,
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfull operation",
+            "schema": {
+              "$ref": "#/definitions/Quotum"
+            }
+          },
+          "401": {
+            "description": "You can't do that"
+          },
+          "422": {
+            "description": "Validation errors",
+            "schema": {
+              "$ref": "#/definitions/ErrorsHash"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Answer": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "text": {
+          "type": "string"
+        },
+        "settings": {
+          "type": "object",
+          "format": "json"
+        }
+      }
+    },
+    "Campaign": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "complete_price": {
+          "type": "number",
+          "format": "double"
+        },
+        "deadline_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "exclusive_offer_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "link_builder": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "survey_url": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "settings": {
+          "type": "object",
+          "format": "json"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "available_transitions": {
+          "type": "object",
+          "format": "array"
+        },
+        "statistics": {
+          "type": "object",
+          "format": "json"
+        }
+      }
+    },
+    "CampaignQuestion": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "campaign_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "settings": {
+          "type": "object",
+          "format": "json"
+        },
+        "substitution": {
+          "$ref": "#/definitions/Substitution"
+        },
+        "question": {
+          "$ref": "#/definitions/Question"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Answer"
+          }
+        }
+      }
+    },
+    "Country": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name_en": {
+          "type": "string"
+        },
+        "name_ru": {
+          "type": "string"
+        }
+      }
+    },
+    "City": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "region_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "country_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name_en": {
+          "type": "string"
+        },
+        "name_ru": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorsHash": {
+      "properties": {
+        "errors": {
+          "type": "string",
+          "format": "json"
+        }
+      }
+    },
+    "UploadFileParams": {
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "form_data": {
+          "type": "string"
+        }
+      }
+    },
+    "Offer": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "campaign_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "provider_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "remote_offer_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cost_model": {
+          "type": "string"
+        },
+        "settings": {
+          "type": "object",
+          "format": "json"
+        },
+        "motivated": {
+          "type": "boolean"
+        },
+        "price": {
+          "type": "number",
+          "format": "double"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Provider": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "utm_hash": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "settings": {
+          "type": "object",
+          "format": "json"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Reward": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "handler": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "cost": {
+          "type": "number",
+          "format": "double"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "settings": {
+          "$ref": "#/definitions/QuestionSettings"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Question": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "key": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "default": "numeric"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "settings": {
+          "$ref": "#/definitions/QuestionSettings"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "QuestionSettings": {
+      "type": "object",
+      "format": "json",
+      "properties": {
+        "values": {
+          "$ref": "#/definitions/QuestionSettingsValues"
+        },
+        "template": {
+          "type": "string",
+          "description": "template to render question on prescreen"
+        }
+      }
+    },
+    "QuestionSettingsValues": {
+      "format": "json",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "key like `city` or `age`"
+        },
+        "value": {
+          "type": "string",
+          "description": "human name to display lable on prescreen"
+        }
+      }
+    },
+    "Substitution": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "campaign_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "question_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "settings": {
+          "$ref": "#/definitions/SubstitutionSettings"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SubstitutionSettings": {
+      "format": "json",
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "key to substitute `sex` for `age` from question"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubstitutionRules"
+          }
+        }
+      }
+    },
+    "SubstitutionRules": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "type": "string"
+          },
+          "description": "array of values to be substituted `['m']` of `['1', '2', '3']` for example"
+        },
+        "substitute_to": {
+          "type": "string",
+          "description": "string to substitute values"
+        }
+      }
+    },
+    "StateChange": {
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "state": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "email": {
+          "type": "string"
+        },
+        "full_name": {
+          "type": "string"
+        },
+        "company_name": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "about": {
+          "type": "string"
+        },
+        "campaigns_count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "is_confirmed": {
+          "type": "boolean"
+        },
+        "is_privileged": {
+          "type": "boolean"
+        },
+        "locale": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }
